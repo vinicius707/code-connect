@@ -24,8 +24,10 @@ export default function RootLayout({
     <html lang="pt-BR" className={prompt.className}>
       <body>
         <div className="app-container">
-          <Aside />
-          {children}
+          <div>
+            <Aside />
+          </div>
+          <div className="main-content">{children}</div>
         </div>
       </body>
     </html>

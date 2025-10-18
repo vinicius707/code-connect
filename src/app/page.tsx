@@ -27,8 +27,10 @@ export default async function Home({
       {posts.map((post: { id: number }) => (
         <CardPost key={post.id} post={post} />
       ))}
-      {prev && <Link href={`/?page=${prev}`}>Página anterior</Link>}
-      {next && <Link href={`/?page=${next}`}>Próxima página</Link>}
+      <div className={styles.links}>
+        {prev && <Link href={`/?page=${prev}`}>Página anterior</Link>}
+        {next && <Link href={`/?page=${next}`}>Próxima página</Link>}
+      </div>
     </main>
   );
 }

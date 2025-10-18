@@ -3,8 +3,10 @@ import logger from "@/logger";
 
 import styles from "./page.module.css";
 
-async function getPosts() {
-  const response = await fetch("http://localhost:3042/posts");
+async function getPosts(page: number) {
+  const response = await fetch(
+    `http://localhost:3042/posts?_page=${page}&_per_page=6`
+  );
   if (!response.ok) {
     logger.error("Ops, alguma coisa deu errado");
   }
@@ -13,10 +15,10 @@ async function getPosts() {
 }
 
 export default async function Home() {
-  const posts = await getPosts();
+  const { data: posts } = await getPosts(1);
   return (
     <main className={styles.grid}>
-      {posts.map((post) => (
+      {posts.map((post: { id: number }) => (
         <CardPost key={post.id} post={post} />
       ))}
     </main>

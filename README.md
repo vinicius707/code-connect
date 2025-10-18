@@ -89,17 +89,19 @@ npm install --save-dev json-server
 ### Executando o JSON Server
 
 ```bash
-# Comando básico
+# Comando básico (porta 3042 - conforme configurado na aplicação)
+json-server --watch posts.json --port 3042
+
+# Com porta padrão (3000) se preferir
 json-server --watch posts.json
 
-# Com porta personalizada
-json-server --watch posts.json --port 3001
-
 # Com delay para simular latência
-json-server --watch posts.json --delay 1000
+json-server --watch posts.json --port 3042 --delay 1000
 ```
 
-O JSON Server estará disponível em: `http://localhost:3000` (porta padrão)
+**⚠️ Importante**: A aplicação está configurada para acessar o JSON Server na porta 3042. Certifique-se de executar o comando com `--port 3042`.
+
+O JSON Server estará disponível em: `http://localhost:3042`
 
 ### Endpoints Disponíveis
 
@@ -142,3 +144,41 @@ src/
 - ✅ API simulada com JSON Server
 - ✅ TypeScript para tipagem estática
 - ✅ ESLint para qualidade de código
+
+## ⚠️ Comportamento da Aplicação
+
+A aplicação atual **requer** que o JSON Server esteja rodando na porta 3042 para funcionar corretamente. Se o servidor não estiver disponível, a aplicação irá falhar com erro de parsing JSON.
+
+## 🔧 Troubleshooting
+
+### Erro: "Unexpected token 'N', 'Not Found' is not valid JSON"
+
+Este erro ocorre quando o JSON Server não está rodando ou está rodando em uma porta diferente. Para resolver:
+
+1. **Verifique se o JSON Server está rodando na porta 3042**:
+
+   ```bash
+   json-server --watch posts.json --port 3042
+   ```
+
+2. **Verifique se está na porta correta** (3042):
+
+   ```bash
+   # Acesse no navegador
+   http://localhost:3042/posts
+   ```
+
+3. **Se necessário, pare o servidor Next.js e reinicie**:
+   ```bash
+   # Pare o Next.js (Ctrl+C)
+   # Execute novamente
+   npm run dev
+   ```
+
+### Erro de CORS
+
+Se houver problemas de CORS, adicione a flag `--no-cors` ao json-server:
+
+```bash
+json-server --watch posts.json --port 3042 --no-cors
+```

@@ -1,10 +1,12 @@
 import { CardPost } from "@/components/CardPost";
+import logger from "@/logger";
 
 async function getPosts() {
   const response = await fetch("http://localhost:3042/posts");
   if (!response.ok) {
-    throw new Error("Failed to fetch posts");
+    logger.error("Ops, alguma coisa deu errado");
   }
+  logger.info("Posts obtidos com sucesso");
   return response.json();
 }
 

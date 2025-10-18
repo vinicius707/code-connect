@@ -13,6 +13,7 @@ Este é um projeto de blog desenvolvido com Next.js que demonstra conceitos fund
 - **TypeScript 5** - Superset tipado do JavaScript
 - **Tailwind CSS 4** - Framework CSS utilitário
 - **Winston 3.18.3** - Biblioteca de logging para Node.js
+- **Remark & Remark-HTML** - Processamento de Markdown
 - **ESLint** - Linter para JavaScript/TypeScript
 
 ## 📦 Dependências
@@ -23,6 +24,8 @@ Este é um projeto de blog desenvolvido com Next.js que demonstra conceitos fund
 - `react`: 19.1.0
 - `react-dom`: 19.1.0
 - `winston`: ^3.18.3
+- `remark`: ^15.0.0
+- `remark-html`: ^16.0.0
 
 ### Dependências de Desenvolvimento
 
@@ -72,6 +75,13 @@ npm run lint
 
 O projeto estará disponível em: `http://localhost:3000`
 
+### Rotas Disponíveis
+
+- `/` - Página inicial com lista de posts (com paginação)
+- `/posts/[slug]` - Página de detalhes de um post específico
+  - Exemplo: `/posts/introducao-ao-react`
+  - Exemplo: `/posts/css-grid-na-pratica`
+
 ## 🗄️ JSON Server
 
 Para simular uma API REST, você pode usar o `json-server` com o arquivo `posts.json`:
@@ -105,8 +115,9 @@ O JSON Server estará disponível em: `http://localhost:3042`
 
 ### Endpoints Disponíveis
 
-- `GET /posts` - Lista todos os posts
-- `GET /posts/:id` - Busca um post específico
+- `GET /posts` - Lista todos os posts (com paginação)
+- `GET /posts?slug=:slug` - Busca um post específico por slug
+- `GET /posts/:id` - Busca um post específico por ID
 - `POST /posts` - Cria um novo post
 - `PUT /posts/:id` - Atualiza um post
 - `DELETE /posts/:id` - Remove um post
@@ -121,6 +132,15 @@ O projeto utiliza Winston para logging com as seguintes configurações:
   - `error.log` - Apenas logs de erro
   - `combined.log` - Todos os logs
 
+## 📄 Processamento de Markdown
+
+O projeto utiliza **Remark** e **Remark-HTML** para processar conteúdo Markdown:
+
+- **Remark**: Parser de Markdown para JavaScript
+- **Remark-HTML**: Plugin para converter Markdown em HTML
+- **Uso**: Código de exemplo nos posts é processado de Markdown para HTML
+- **Renderização**: HTML é renderizado usando `dangerouslySetInnerHTML`
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -128,7 +148,12 @@ src/
 ├── app/                 # App Router do Next.js
 │   ├── globals.css     # Estilos globais
 │   ├── layout.tsx      # Layout principal
-│   └── page.tsx        # Página inicial
+│   ├── page.tsx        # Página inicial (lista de posts)
+│   ├── page.module.css # Estilos da página inicial
+│   └── posts/          # Páginas de posts
+│       └── [slug]/     # Rota dinâmica para posts individuais
+│           ├── page.tsx        # Página de detalhes do post
+│           └── page.module.css # Estilos da página de post
 ├── components/         # Componentes React
 │   ├── Aside/         # Componente de sidebar
 │   ├── Avatar/        # Componente de avatar
@@ -138,10 +163,13 @@ src/
 
 ## 🎯 Funcionalidades
 
-- ✅ Interface responsiva com Tailwind CSS
+- ✅ Interface responsiva com CSS Modules
 - ✅ Componentes React reutilizáveis
 - ✅ Sistema de logging com Winston
 - ✅ API simulada com JSON Server
+- ✅ Páginas dinâmicas com roteamento por slug
+- ✅ Processamento de Markdown com Remark
+- ✅ Paginação de posts
 - ✅ TypeScript para tipagem estática
 - ✅ ESLint para qualidade de código
 
